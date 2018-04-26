@@ -2,17 +2,46 @@
 
 function lang($phrase){
     static $lang = array(
+        //dashboard page
         'MASSAGE' =>  'Welcome ',
-        'ADMIN' =>  'admin ',
+         //navbar page
+
+        'Admin' =>  'Admin Area',
+        'Categorise' =>  'Sections ',
+        '' =>  ' ',
+        'Items' =>  'Items ',
+        'Members' =>  'Members ',
+        'Statistics' =>  'Statistics ',
+        'Logs' =>  'Logs ',
+        '' =>  ' ',
+
+        
+        // pages
         '' =>  ' ',
         '' =>  ' ',
         '' =>  ' ',
         '' =>  ' ',
+
+
+           // pages
+           '' =>  ' ',
+           '' =>  ' ',
+           '' =>  ' ',
+           '' =>  ' ',
+
+
+              // pages
         '' =>  ' ',
         '' =>  ' ',
         '' =>  ' ',
         '' =>  ' ',
-        '' =>  ' ',
+
+           // pages
+           '' =>  ' ',
+           '' =>  ' ',
+           '' =>  ' ',
+           '' =>  ' ',
+
         );
 return $lang {$phrase};
 

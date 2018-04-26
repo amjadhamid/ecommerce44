@@ -1,13 +1,174 @@
+<?php ob_start(); ?>
 <?php
+
+session_start();
+// print_r($_SESSION);// للتحقق اذا كان هناك جلسة
+if(isset($_SESSION['Username']   )){
+   header('Location: dashboard.php'); //Redirect to Dashboard page
+}
+
+$noNavbar = ' ';
+$pageTitle ='Login';
+
+
 include "init.php";
-include 'include/lang/englich.php';
- include  $tpl . 'header.php';
-?>
-<?php echo lang('MASSAGE');
-?>
-  <i class="fas color fa-user"></i>
-  <i class="far fa-user"></i>
-<?php echo"body"?>
-<?php
+
+
+
+
+//CHECK IF USER COMING FROM HTTP POST REQUEST
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+
+//Assigne variables
+// <!-- VALIDATE WITH filter -->
+$username = $_POST['user'] ;
+$password =  $_POST['pass'];
+$hashedPass = sha1($password);
+// $userError ='';
+// $passError='';
+//CHeck Errors
+// $formErrors = array();
+// if (strlen($username) <=7){
+// 	$formErrors[] = 'Username Must be largest than <strong> 7</strong> Characters';
+// }
+
+// if(strlen($password) <0){
+//  $passError = 'The password must be larger than <strong> 5</strong> Characters';
+// }
+// if(empty($password) ){
+// 	$passError = 'There are no password ';
+//    }
+//CHECK IF USER in databsae with security
+// statment = stmt
+
+$stmt = $con->prepare("SELECT 
+                    UserID,  Username , Password 
+					FROM 
+					users
+					WHERE 
+					Username = ? 
+					AND Password = ?
+					AND GroupID = 1
+					LIMIT 1
+					   ");
+// عند جلب البيانات هناك عملتين check fetch
+$stmt->execute(array($username ,$hashedPass ));//التحقق
+$row =$stmt->fetch();
+$count = $stmt->rowCount();//عدد الصفوف
+
+// echo $count; 
+
+if($count > 0 ){
+  // echo 'Welcome ' . $username ;
+$_SESSION['Username']  =  $username ;  //Register username
+// UserId is array
+$_SESSION['ID']  =  $row['UserID'] ; //Register id
+header('Location: dashboard.php');
+exit();
+
+}
+
+}
+
+?>	
+
+                      <!-- VALIDATE WITH PHP -->
+                                 <?php   if(! empty($formErrors)){   ?>
+                                  <div class="alert alert-danger alert-dismissible" role="start">
+                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									 <span aria-hidden="true">&times;</span>
+									 </button>  
+									 <?php
+								  foreach ($formErrors as $error) {
+                                 	 echo $error . '<br/>';
+                                  }
+								  ?>  
+
+								  <!-- close the div -->
+								   </div>
+								   <!-- close the if -->
+							    	<?php  }  ?>
+									
+
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST"  >
+			           
+								
+
+                                
+					
+					
+					<span class="login100-form-title p-b-26">
+						Welcome
+					</span>
+					<span class="login100-form-title p-b-48">
+						<i class="zmdi zmdi-font"></i>
+					</span>
+
+					<div class="wrap-input100 validate-input " data-validate = "Valid name is: a@b.c">
+						<input class="input100 username" type="text" name="user">
+						<span class="focus-input100" data-placeholder="Username"></span>
+					
+					
+					</div>
+
+
+                    
+				
+					
+				
+					
+					
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+						<input class="input100" type="password" name="pass">
+						<span class="focus-input100" data-placeholder="Password"></span>
+					</div>
+					<div class="errors"> 
+
+					<!--   validate in one inbut -->
+                                <!-- <?php  
+                            //  if(isset($formErrors)){
+                            //   foreach ($formErrors as $error) {
+                            //  	 echo $error . '<br/>';
+                            //   }
+                             
+                            //  }
+
+                             ?> -->
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn">
+								Login
+							</button>
+						</div>
+					</div>
+
+					<div class="text-center p-t-115">
+						<span class="txt1">
+							Don’t have an account?
+						</span>
+
+						<a class="txt2" href="#">
+							Sign Up
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+<?
 include $tpl . "footer.php";
 ?>
+
+ <?php ob_end_flush(); ?> 
