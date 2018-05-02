@@ -7,13 +7,13 @@ function lang($phrase){
          //navbar page
 
         'Admin' =>  'Admin Area',
-        'Categorise' =>  'Sections ',
+        'Categories' =>  'Sections ',
         '' =>  ' ',
         'Items' =>  'Items ',
         'Members' =>  'Members ',
         'Statistics' =>  'Statistics ',
         'Logs' =>  'Logs ',
-        '' =>  ' ',
+        'Comments' =>  ' Comments',
 
         
         // pages

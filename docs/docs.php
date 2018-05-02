@@ -45,3 +45,25 @@ to chec some thing in database
 
 
 */
+
+
+
+
+
+/* Check The number of Items function v1.0
+**Function to check Item In Database [function accept parameters]
+** $item = The Item to select [ user , Item , catogory]
+**$table = The table To select From [ users , Items , catogries]
+**
+
+*/
+
+
+/*
+	** Get Latest Records Function v1.0
+	** Function To Get Latest Items From Database [ Users, Items, Comments ]
+	** $select = Field To Select
+	** $table = The Table To Choose From
+	** $order = The Desc Ordering
+	** $limit = Number Of Records To Get
+	*/

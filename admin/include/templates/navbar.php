@@ -9,13 +9,16 @@
   <div class="collapse navbar-collapse" id="app-nav">
     <ul class="navbar-nav">
       <li class="nav-item ">
-        <a class="nav-link" href="#"><?php echo lang('Admin') ?> <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="dashboard.php"><?php echo lang('Admin') ?> <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#"><?php echo lang('Categorise') ?></a>
+        <a class="nav-link " href="Categories.php"><?php echo lang('Categories') ?></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><?php echo lang('Items') ?></a>
+        <a class="nav-link" href="Items.php"><?php echo lang('Items') ?></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="comments.php"><?php echo lang('Comments') ?></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="members.php"><?php echo lang('Members') ?></a>

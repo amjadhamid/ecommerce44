@@ -1,5 +1,14 @@
 <?php
 
+// $(arrayName) = array(
+// 	'' => ,
+// 	'' => ,
+// 	'' => ,
+// );
+// foreach (glob('inc/*.css') as $file) {
+// 	echo "<link rel='stylesheet href='"  . $file "' > ";
+// }
+
 
 //Router for more dynamic
 $tpl = 'include/templates/';//Template Directory
@@ -25,12 +34,18 @@ include  $tpl . 'navbar.php';
 }
 ?>
 
+    <!-- jquery -->
+	<!-- <script src="js/jquery.js"></script>   -->
+
+<!-- <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script> -->
 
 
-
-                            <!-- confirm jquery -->
+                            <!-- confirm jquery
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script> -->
 
 
 
@@ -95,8 +110,13 @@ body{
     background-color :#f4f4f4;
     font-size : 16px;
 }
+a{
+	text-decoration : none ;
+}
 
-.color{
+
+/* //End members pages page */
+.red{
     color:red;
 }
 
@@ -168,6 +188,157 @@ position :absolute;
 .main-table .btn{
 	padding: 10px 3px;
 }
+
+
+/* //End members pages page */
+
+
+
+
+/* //Start Dashboard page */
+.home-stats .stat {
+	background-color : #EEE ;
+	padding : 20px ;
+    font-size : 15px ;
+	position:relative;
+	 overflow:hidden;
+    }
+	.home-stats .stat i{
+		font-size:68px;
+		top: 40px;
+	}
+	.home-stats .stat  .info{
+     float :right;
+
+	}
+.home-stats .stat span{
+	display : block;
+	font-size : 55px ;
+	color : white;
+}
+
+.home-stats .stat a{
+	color :#FFF ;
+	font-size : 50px ;
+
+}
+.home-stats .st-members{
+	background-color :   #3498db  ;
+	border-radius: 20px ;
+}
+
+.home-stats .st-pending{
+	background-color :  #e67e22   ;
+	border-radius: 20px ;
+
+ }
+
+.home-stats .st-items{
+	background-color :   #f1c40f  ;
+	border-radius: 20px ;
+
+}
+
+.home-stats .st-comments{
+	background-color : #9b59b6   ;
+	border-radius: 20px ;
+
+}
+
+
+
+
+.latest{
+	margin-top : 30px ;   
+}
+.latest .toggle-info{
+color:#888;
+cursor:pointer;
+ }
+ 
+.latest .toggle-info:hover{
+color:#333;
+ }
+.padding{
+	margine:10px 10px;
+}
+
+.comments{
+background-color:#888;
+float:left;
+
+}
+.nice-massage{
+	padding:48px;
+	background-color: #FFF;
+
+}
+
+
+/* //End Dashboard page */
+/* //start  categories page */
+.categories .cat:last-of-type ~ hr{
+	display:none:
+}
+.categories .cat{
+	padding:  ;
+	position:  relative;
+	overflow: hidden ;
+}
+
+.categories .cat:hover{
+background-color: #EEE;
+}
+
+.categories .cat:hover .hidden-buttons {
+  right : 30px ;
+}
+
+.categories .cat .hidden-buttons {
+       -webkit-transition: all .5s ease-in-out;
+	   
+       -moz-transition: all .5s ease-in-out;
+	   
+       transition: all .5s ease-in-out;
+	   position: absolute ;
+
+	   top : 10px ;
+	   right : -140px ;
+ 
+
+
+ }
+
+.categories .cat .hidden-buttons a{
+	 margin-right : 5px ;
+
+}
+
+ .hidden-buttons{
+	-webkit-animation: jump 1.5s ease 0s infinite normal ;
+       animation: jump 1.5s ease 0s infinite normal ;
+}
+
+
+
+.categories .option:click .active{
+color : #00c2ff ; 
+font-weight : bold ;
+}
+.categories .cat h2{
+  color  :#6A6A6A;
+}
+.categories .cat .full-view p{
+
+}
+.categories   .panel-heading{
+  color:	#959595 ;
+  font-weight : bold ;
+
+}
+/* //End categories page */
+
+
 </style>
 
 

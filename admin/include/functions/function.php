@@ -80,6 +80,40 @@ return $count ;
 };
 
 
+/* Check The number of Items function v1.0
+**Function to check Item In Database [function accept parameters]
+** $item = The Item to select [ user , Item , catogory]
+**$table = The table To select From [ users , Items , catogries]
+**
+
+*/
 
 
+function countItems ($Item , $table){
 
+global $con;
+
+$stmt3 = $con->prepare("SELECT COUNT($Item) FROM $table");
+
+$stmt3->execute();
+
+return $stmt3->fetchColumn();
+
+}
+
+
+	/*
+	** Get Latest Records Function v1.0
+	** Function To Get Latest Items From Database [ Users, Items, Comments ]
+	** $select = Field To Select
+	** $table = The Table To Choose From
+	** $order = The Desc Ordering
+	** $limit = Number Of Records To Get
+	*/
+	function getLatest($select, $table, $order, $limit = 5) {
+		global $con;
+		$getStmt = $con->prepare("SELECT $select FROM $table ORDER BY $order DESC LIMIT $limit");
+		$getStmt->execute();
+		$rows = $getStmt->fetchAll();
+		return $rows;
+	}

@@ -1,31 +1,5 @@
 <?php ob_start(); ?>
 
-<script>
-$(function (){
-var passField =$('.password');
-
-$('i').hover(function (){
-
- passField.attr('type' , 'text');
-},function (){
-passField.attr('type'  ,'Password');
-});
-}
-});
-// confirmition massage on button
-$(.confirm).click(function(){
-return confirm('Are you Sure?');
-});
-
-///////////////
-function myFunction() {
-    confirm("Press a button!");
-}
-
-
-
-
-</script>
 
 
 
@@ -44,10 +18,20 @@ if(isset($_SESSION['Username'] )){
 
 //اهم سطر 
 $do =isset($_GET['do']) ? $_GET['do'] : 'Manage';
+
+
       if($do == 'Manage'){   
-       // all user excpet admin 
-             $stmt = $con->prepare("SELECT * FROM users WHERE  UserID !=1
-   ");
+
+// failed
+        // $query = '';
+        // if (isset($_GET['page']) && $_GET['page'] == 'Pending') {
+        //   $query = "AND RegStatus = 0";
+        // }
+        // Select All Users Except Admin 
+        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1   ORDER BY 
+
+        UserID  DESC ");
+  
 // عند جلب البيانات هناك عملتين check fetch
 $stmt->execute();//التحقق من الغيت التانية بتاع ال userid
 //  جلب البيانتا
@@ -56,7 +40,8 @@ $rows =$stmt->fetchALL();
 
   
   
-  
+  if(!empty($rows)){
+
   
   ?>
  <h1 class="text-center">Manage Member</h1>
@@ -87,9 +72,13 @@ $rows =$stmt->fetchALL();
       echo"<td>
       <a class='btn btn-success btn-md' href='members.php?do=Edit&userid=".$row['UserID']."'><i class='fa fa-edit'></i>Edit</a>
      
-       <a class='btn btn-danger btn-md ' href='members.php?do=Delete&userid=".$row['UserID']."'><i class=' fa fa-close'></i>Delete</a>
+       <a class='btn btn-danger btn-md ' href='members.php?do=Delete&userid=".$row['UserID']."'><i class=' fa fa-close'></i>Delete</a>";
+        if($row['RegStatus'] == 0){
+         echo "       <a class='btn btn-info btn-md ' href='members.php?do=Activate&userid=".$row['UserID']."'><i class=' fa fa-check'></i>Activate</a>";
+          
+        }
      
-      </td>" ;
+     echo "</td>"  ;
       echo"<tr>"  ;
 
   }
@@ -102,29 +91,23 @@ $rows =$stmt->fetchALL();
    <a href="members.php?do=Add" class="btn btn-primary"><h3><i class="fa fa-plus"></i>New Member</h3></a>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php
+//for empty
+}else{
+?>
+<div class="container">
+<div class="alert alert-info"> There is No Members to Manage  </div>
+<a href="members.php?do=Add" class="btn btn-primary"><h3><i class="fa fa-plus"></i>New Member</h3></a>
+
+</div>
+<?php
+}
+
+
+
+
 }elseif ( $do  == 'Delete'){
-  ?>  <h1 class="text-center">Delete New Member</h1>
-  <?php
-  
+ 
   
   
     //check if get is numaric & Get the Integer Value
@@ -151,7 +134,9 @@ $rows =$stmt->fetchALL();
       $theMsg = "<div class='alert alert-sucsses'> " . $stmt->rowCount() . '  Record Inserted</div>';//عدد الصفوف
 
       redirectHome($theMsg ,'back' );
-      echo "</div>";  }else{
+      echo "</div>"; 
+    
+    }else{
     echo "<div class='container'>" ;
     $theMsg = " <div class='alert alert-danger'>This ID is not exist.</div> ";
   
@@ -189,7 +174,7 @@ $row =$stmt->fetch();
 $count = $stmt->rowCount();//عدد الصفوف
 // اذا كانت البيانات موجودة فأظهر الاعدادات 
 if(isset($stmt)){ 
-if($stmt->rowCount() > 0){   ?>
+if($count > 0){   ?>
 
 <h1 class="text-center">Edit Member</h1>
 <div class='container'>
@@ -238,25 +223,6 @@ if($stmt->rowCount() > 0){   ?>
 
 }
 }
-  ?>
-
-
-
-
-
-<?php
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -305,11 +271,31 @@ if (strlen($name) >20){
   $formErrors[] = ' 
   Username Must be largest than <strong> 20</strong> Characters';
 }
-// if(strlen($password) <0){
-//   $passError = 'The password must be larger than <strong> 5</strong> Characters';
-//  }
+
 ?>
 <?php   if(! empty($formErrors)){   
+
+// to do not dublicate another user like a user in database
+//           <<<<<<<<<<<<<<<<<<<< UserId != ? >>>>>>>>>>>>>>>>>>>
+
+$stmt2 = $con->prepare("SELECT  
+                            *
+                        FROM 
+                             users 
+                        WHERE
+                              Username = ? 
+                        AND 
+                            UserID !=?  
+                             ");
+
+$stmt2->execute(array($name , $userid));
+$count = $stmt2->rowCount();
+if($count == 1){
+  echo " <div class='alert alert-danger'>Sorry This user is exist .</div> ";
+
+  redirectHome($theMsg  , 'back');
+}else{
+
   foreach ($formErrors as $error) {
     echo '<div class="alert alert-danger alert-dismissible" role="start">'. $error . '</div><br/>';
   }
@@ -319,7 +305,7 @@ if (strlen($name) >20){
 <!-- close the div -->
 </div>
 <!-- close the if -->
-<?php  }  ?>
+<?php } }  ?>
 
 
 
@@ -337,7 +323,7 @@ $stmt->execute(array(  $email ,$name , $full ,$pass ,$id));//التحقق من �
 echo "<div class='container'>" ;
 
 $theMsg = "<div class='alert alert-sucsses'> " . $stmt->rowCount() . "  Record Updateted</div>";//عدد الصفوف
-    redirectHome($theMsg ,'back' ,100 );
+    redirectHome($theMsg ,'back' ,4 );
    echo "</div>";
   }
 }else{
@@ -350,32 +336,13 @@ $theMsg = "<div class='alert alert-sucsses'> " . $stmt->rowCount() . "  Record U
   echo "</div>";
 }
 
+?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+  
+  
+  <?php
 
 
 }elseif ( $do  == 'Add'){ ?>
@@ -423,9 +390,49 @@ $theMsg = "<div class='alert alert-sucsses'> " . $stmt->rowCount() . "  Record U
 
 
 
+}elseif($do == 'Activate'){
+  ?>  
+ <h1 class="text-center">Activate Member</h1>
+ 
+ 
+ <?php
 
 
+   //check if get is numaric & Get the Integer Value
+   $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
+   
+   //Select all Data Depend on this ID
+   
+ //Select all Data Depend on this ID
+ $check = checkItem('userid' , 'users' , $userid);
+ if($check > 0){
+ $stmt = $con->prepare("UPDATE 
 
+ users
+SET
+RegStatus =1
+WHERE
+ UserID = ?
+    ");
+//ربط الحضف بالباراميتر
+$stmt->execute(array($userid));
+
+
+echo "<div class='container'>" ;
+
+   $theMsg = "<div class='alert alert-sucsses'> " . $stmt->rowCount() . '  Record Activted</div>';//عدد الصفوف
+
+   redirectHome($theMsg ,'back' );
+   echo "</div>";  }else{
+ echo "<div class='container'>" ;
+ $theMsg = " <div class='alert alert-danger'>This ID is not exist.</div> ";
+
+ redirectHome($theMsg ,3 );
+ echo "</div>";
+
+ 
+ 
+}
 
 
 
@@ -447,19 +454,19 @@ $theMsg = "<div class='alert alert-sucsses'> " . $stmt->rowCount() . "  Record U
   
    if(empty($name)){
     $formErrors[] ='  
-    user name can be <strong> empty</strong> ';
+    user name can not be <strong> empty</strong> ';
    }
    if(empty($email)){
     $formErrors[] =' 
-    email can be <strong> empty</strong>';
+    email can not be <strong> empty</strong>';
   }
   if(empty($password)){
     $formErrors[] =' 
-    password can be <strong> empty</strong>';
+    password can not be <strong> empty</strong>';
   }
   if(empty($full)){
     $formErrors[] ='
-    user fullname can be <strong> empty</strong>';
+    user fullname can not be <strong> empty</strong>';
   }
   if (strlen($name) <4){
     $formErrors[] = ' 
@@ -504,9 +511,11 @@ if ($check == 1){
   echo "</div>";
 }else{
     //another way
+
+    // in the insert you must take all what you want 
    $stmt = $con->prepare("INSERT INTO 
-                        users (  Email , Username , Fullname  , Password , Date )
-                        VALUES (? ,?,?,? , now())
+                        users (  Email , Username , Fullname  , Password ,RegStatus  , Date )
+                        VALUES (? ,?,?,? , 1, now())
                          ");
   
   // عند جلب البيانات هناك عملتين check fetch
@@ -539,43 +548,8 @@ if ($check == 1){
 
 }
 
-}elseif ( $do  == 'Delete'){
-?>  <h1 class="text-center">Add New Member</h1>
-<?php
 
 
-
-  //check if get is numaric & Get the Integer Value
-	$userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
- 
-    //Select all Data Depend on this ID
-$check = checkItem('userid' , 'users' , $userid);
-if($check > 0){   
-  $stmt = $con->prepare("DELETE 
-  FROM 
-  users
-  WHERE 
-  UserID = ?
-     ");
-//ربط الحضف بالباراميتر
-$stmt->bindParam( "?" ,$userid);
-
-$stmt->execute();
-echo "<div class='container'>" ;
-
-$theMsg = "<div class='alert alert-sucsses'> " . $stmt->rowCount() . '  Record Inserted</div>';//عدد الصفوف
-
-redirectHome($theMsg ,'back' );
-echo "</div>";
-
-}else{
-  echo "<div class='container'>" ;
-  $theMsg = " <div class='alert alert-danger'>This ID is not exist.</div> ";
-
-  redirectHome($theMsg ,3 );
-  echo "</div>";
-
-}
 
 
 
