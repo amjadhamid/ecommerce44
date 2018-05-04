@@ -4,7 +4,13 @@ $(function () {
 
 
 //
-
+//switch 
+$('h1 .select').click(function(){
+$($this).addClass('red').siblings().removeClass('red');
+$('form').hide();
+$( '.' + $(this).data('class')).faseIn(110);
+});
+});
 
 	// Dashboard 
 

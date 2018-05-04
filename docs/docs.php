@@ -66,4 +66,14 @@ to chec some thing in database
 	** $table = The Table To Choose From
 	** $order = The Desc Ordering
 	** $limit = Number Of Records To Get
-	*/
+	
+
+
+
+	** Get Latest Records Function v1.0
+	** Function To Get Categories From Database [ Users, Items, Comments ]
+
+	function getCat() {
+
+
+		*/

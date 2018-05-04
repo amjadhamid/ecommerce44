@@ -88,6 +88,7 @@ return $count ;
 
 */
 
+if (!function_exists('countItems')) {
 
 function countItems ($Item , $table){
 
@@ -100,7 +101,7 @@ $stmt3->execute();
 return $stmt3->fetchColumn();
 
 }
-
+}
 
 	/*
 	** Get Latest Records Function v1.0
@@ -117,3 +118,4 @@ return $stmt3->fetchColumn();
 		$rows = $getStmt->fetchAll();
 		return $rows;
 	}
+

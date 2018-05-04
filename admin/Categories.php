@@ -32,7 +32,7 @@ if(isset($_SESSION['Username'])){
        
        
        <?php
-       if(!empty($rows)){
+       if(!empty($cats)){
        
        
        ?>

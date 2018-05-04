@@ -196,7 +196,7 @@ if(isset($_SESSION['Username'])){
    <div class="form-group form-group-lg ">
      <label for="exampleFormControlInput1" 
      required="required">Member</label>
-      <select class="form-control" name="Member">
+      <select  name="Member">
        <option value="o">... </option>
        <?php
          $stmt = $con->prepare("SELECT * FROM users");
@@ -220,7 +220,7 @@ if(isset($_SESSION['Username'])){
      <label for="exampleFormControlInput1"         
      required="required"  >
               category</label>
-      <select class="form-control" name="category">
+      <select  name="category">
        <option value="o">... </option>
        <?php
          $stmt = $con->prepare("SELECT * FROM categories");
@@ -269,7 +269,7 @@ if(isset($_SESSION['Username'])){
           items (  Name , Description , Price  ,
              Country_Made ,Status ,Add_Date 
                , Cat_Id  , Member_ID
-                )
+                 )
                                 VALUES (? ,?,?,? ,? , now() , ? , ?)
                                  ");
           
